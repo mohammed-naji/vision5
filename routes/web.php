@@ -1,13 +1,19 @@
 <?php
 
-Route::get('', function() {
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', function() {
     return 'Homepage';
 });
 
-Route::get('about', function() {
-    return 'About Page';
+Route::get('news', function() {
+    return 'News page';
 });
 
-Route::get('contact', function() {
-    return 'contact';
+Route::get('news/{id}', function($aaaaaaa) {
+    return "Single news number : $aaaaaaa";
+});
+
+Route::get('user/{name}', function($name) {
+    return 'Welcome ' . $name;
 });
