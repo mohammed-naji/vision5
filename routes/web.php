@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Site1Controller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\StudentController;
@@ -74,8 +75,17 @@ use App\Http\Controllers\TestController;
 
 
 
-Route::get('/', [SiteController::class, 'index']);
-Route::get('/about', [SiteController::class, 'about']);
-Route::get('/contact', [SiteController::class, 'contact']);
-Route::get('portal', [StudentController::class, 'index']);
-Route::get('portal/{st}', [StudentController::class, 'student']);
+// Route::get('/', [SiteController::class, 'index']);
+// Route::get('/about', [SiteController::class, 'about']);
+// Route::get('/contact', [SiteController::class, 'contact']);
+// Route::get('portal', [StudentController::class, 'index']);
+// Route::get('portal/{st}', [StudentController::class, 'student']);
+
+Route::prefix('site1')->group(function() {
+
+    Route::get('/', [Site1Controller::class, 'index'])->name('site1home');
+    Route::get('/about', [Site1Controller::class, 'about'])->name('site1about');
+    Route::get('/services', [Site1Controller::class, 'services'])->name('site1services');
+    Route::get('/contact', [Site1Controller::class, 'contact'])->name('site1contact');
+
+});
