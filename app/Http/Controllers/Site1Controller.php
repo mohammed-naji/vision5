@@ -8,7 +8,15 @@ class Site1Controller extends Controller
 {
     public function index()
     {
-        return view('index');
+        $title = 'About Us From Controller';
+        $body = 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore assumenda beatae, ipsam numquam voluptates pariatur culpa nisi exercitationem vero tenetur tempora labore nemo, voluptate maiores sequi, modi dolor voluptas quo!';
+
+        // return view('index')->with('title', $title)->with('body', $body);
+        // return view('index', compact('title', 'body'));
+        return view('index', [
+            'about_title' => $title,
+            'about_body' => $body
+        ]);
     }
 
     public function about()
