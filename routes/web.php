@@ -113,5 +113,14 @@ Route::prefix('site2')->group(function() {
 
 Route::get('site3', [Site3Controller::class, 'index'])->name('site3index');
 
+
+// Forms
 Route::get('form1', [FormController::class, 'form1']);
 Route::post('form1', [FormController::class, 'form1Submit'])->name('form1');
+
+
+Route::get('form2', [FormController::class, 'form2']);
+Route::post('form2', [FormController::class, 'form2Submit'])->name('form2');
+
+Route::get('form3', [FormController::class, 'form3']);
+Route::post('form3', [FormController::class, 'form3Submit'])->name('form3');

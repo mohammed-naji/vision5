@@ -14,13 +14,19 @@
     <div class="container my-5">
         <h1>First Form Example</h1>
 
-        <form action="{{ route('form1') }}" method="post">
-            {{-- <input type="hidden" name="_token" value="{{ csrf_token() }}" /> --}}
+        <form action="{{ route('form1') }}" method="POST">
+
             @csrf
 
-            <input type="text" class="form-control" name="name" >
+            <input class="form-control" placeholder="Name" name="name" />
+            <input class="form-control" placeholder="Email" name="email" />
+            <input class="form-control" placeholder="Email" name="email1" />
+            <input class="form-control" placeholder="Email" name="email2" />
+            <input class="form-control" placeholder="Email" name="email3" />
+            <input type="radio" name="test" value="test" />
 
-            <button class="btn btn-success w-25 mt-4">Send</button>
+            <button class="btn btn-success mt-3">Send</button>
+
         </form>
 
     </div>
