@@ -124,3 +124,13 @@ Route::post('form2', [FormController::class, 'form2Submit'])->name('form2');
 
 Route::get('form3', [FormController::class, 'form3']);
 Route::post('form3', [FormController::class, 'form3Submit'])->name('form3');
+
+Route::get('form4', [FormController::class, 'form4']);
+Route::post('form4', [FormController::class, 'form4Submit'])->name('form4');
+
+
+Route::get('form5', [FormController::class, 'form5']);
+Route::post('form5', [FormController::class, 'form5Submit'])->name('form5');
+
+
+Route::view('/', 'welcome');

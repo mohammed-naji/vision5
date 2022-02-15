@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ContactUsMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class FormController extends Controller
 {
@@ -70,5 +72,65 @@ class FormController extends Controller
         ]);
 
         dd($request->all());
+    }
+
+    public function form4()
+    {
+        return view('forms.form4');
+    }
+
+    public function form4Submit(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|min:3|max:20',
+            'phone' => 'required',
+            'cv' => 'required|image|max:1024'
+        ]);
+
+        // dd($request->name);
+
+        // dd($request->all());
+
+        // $imgname = time() . $request->file('cv')->getClientOriginalName();
+
+        $ex = $request->file('cv')->getClientOriginalExtension(); // fdfas.png => png
+        $imgname = 'vision5_'.time().'_'.rand(0000000000, 9999999999).'.'.$ex;
+        $request->file('cv')->move(public_path('uploads'), $imgname);
+    }
+
+    public function form5()
+    {
+        return view('forms.form5');
+    }
+
+    public function form5Submit(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'subject' => 'required',
+            'message' => 'required',
+            'cv' => 'file|mimes:pdf|max:5200'
+        ]);
+
+        // Mohammed Ahmed
+        // mohamed name => strtolowe
+        // mohammed_name
+
+        $newname = str_replace(' ', '_', strtolower($request->name));
+        $ex = $request->file('cv')->getClientOriginalExtension();
+        // cv_mohammed_ahmed_123456465.pdf
+
+        // store uploaded file
+        $cvname = 'cv_'.$newname.'_'.time().'.'.$ex;
+        $request->file('cv')->move(public_path('uploads/cv'), $cvname);
+
+        $data = $request->except('_token', 'cv', 'hoppies');
+        $data['cv'] = $cvname;
+        $data['hoppies'] = implode(', ', $request->hoppies);
+
+        Mail::to('admin@info.com')->send(new ContactUsMail($data));
+
+        // dd( $request->all() );
     }
 }
