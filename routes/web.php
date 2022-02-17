@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TestController;
+use App\Models\News;
+use Illuminate\Support\Facades\DB;
 
 // Route::get('/', function() {
 //     return 'Homepage';
@@ -134,3 +136,36 @@ Route::post('form5', [FormController::class, 'form5Submit'])->name('form5');
 
 
 Route::view('/', 'welcome');
+
+
+Route::get('insert', function() {
+
+    // Query Statment
+
+    // DB::statement('insert into comments (comment) values ("new comment")');
+    // DB::insert('insert into comments (comment) values (?)', ['new new']);
+
+    // Query Builder
+    // DB::table('news')->insert([
+    //     'title' => 'another post',
+    //     'body' => 'lorem lorem',
+    //     'image' => 'aa.png',
+    //     'views' => '5',
+    //     'rate' => '3.5',
+    //     'created_at' => now(),
+    //     'updated_at' => now(),
+    // ]);
+
+
+    //DB::table('news')->insert([
+
+    // Eleqouent
+    News::create([
+        'title' => 'another post 2',
+        'body' => 'lorem lorem 2',
+        'image' => 'aa2.png',
+        'views' => '88',
+        'rate' => '4.5'
+    ]);
+
+});
