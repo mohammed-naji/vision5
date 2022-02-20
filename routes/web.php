@@ -1,15 +1,17 @@
 <?php
 
+use App\Http\Controllers\CourseController;
+use App\Models\News;
+use App\Models\Course;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\SiteController;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\Site1Controller;
 use App\Http\Controllers\Site2Controller;
 use App\Http\Controllers\Site3Controller;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SiteController;
 use App\Http\Controllers\StudentController;
-use App\Http\Controllers\TestController;
-use App\Models\News;
-use Illuminate\Support\Facades\DB;
 
 // Route::get('/', function() {
 //     return 'Homepage';
@@ -159,13 +161,44 @@ Route::get('insert', function() {
 
     //DB::table('news')->insert([
 
-    // Eleqouent
-    News::create([
-        'title' => 'another post 2',
-        'body' => 'lorem lorem 2',
-        'image' => 'aa2.png',
-        'views' => '88',
-        'rate' => '4.5'
-    ]);
+    // // Eleqouent
+    // News::create([
+    //     'title' => 'another post 2',
+    //     'body' => 'lorem lorem 2',
+    //     'image' => 'aa2.png',
+    //     'views' => '88',
+    //     'rate' => '4.5'
+    // ]);
 
 });
+
+
+Route::get('new-course', function() {
+
+    Course::create([
+        'name' => 'New Course',
+        'price' => 100.8,
+        'image' => 'new.png',
+        'description' => 'lorem'
+    ]);
+
+    return 'Done';
+});
+
+
+Route::prefix('courses')->name('courses.')->group(function() {
+    // Show all database records
+    Route::get('/', [CourseController::class, 'index'])->name('index');
+
+    // to create new rocord
+    Route::get('create', [CourseController::class, 'create'])->name('create');
+    Route::post('create', [CourseController::class, 'store'])->name('store');
+
+    // to create new rocord
+    Route::get('/{id}/edit', [CourseController::class, 'edit'])->name('edit');
+    Route::put('/{id}/edit', [CourseController::class, 'update'])->name('update');
+
+    Route::delete('/{id}/delete', [CourseController::class, 'destroy'])->name('destroy');
+});
+
+Route::resource('courses', CourseController::class);
