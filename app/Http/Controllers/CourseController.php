@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Rules\MaxWordsRule;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -21,6 +22,11 @@ class CourseController extends Controller
         }
 
         $courses = Course::orderBy('id', 'desc')->paginate($counts);
+
+        if(request()->has('name')) {
+            $courses = Course::orderBy('id', 'desc')->where('name', 'like', '%'. request()->name .'%')->paginate($counts);
+        }
+
         // $courses = Course::latest('id')->get();
         // dd($courses);
         return view('courses.index', compact('courses'));
@@ -33,7 +39,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        return view('courses.create');
     }
 
     /**
@@ -44,9 +50,26 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'name' => 'required|min:3|max:20',
+            'price' => 'required|numeric',
+            'image' => 'required|image|mimes:png,jpg,jpeg,gif,svg',
+            'description' => [new MaxWordsRule(500)]
+        ]);
 
+        // upload file
+        $imgname = 'course_'.time().rand().$request->file('image')->getClientOriginalName();
+        $request->file('image')->move(public_path('uploads'), $imgname);
+
+        Course::create([
+            'name' => $request->name,
+            'price' => $request->price,
+            'image' => $imgname,
+            'description' => $request->description,
+        ]);
+
+        return redirect()->route('courses.index')->with('msg', 'Course added successfully')->with('type', 'success');
+    }
     /**
      * Display the specified resource.
      *
@@ -55,7 +78,7 @@ class CourseController extends Controller
      */
     public function show($id)
     {
-        //
+        return 'Showwwww';
     }
 
     /**
@@ -89,6 +112,7 @@ class CourseController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Course::destroy($id);
+        return redirect()->route('courses.index')->with('msg', 'Course deleted successfully')->with('type', 'danger');
     }
 }

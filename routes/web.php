@@ -186,19 +186,19 @@ Route::get('new-course', function() {
 });
 
 
-Route::prefix('courses')->name('courses.')->group(function() {
-    // Show all database records
-    Route::get('/', [CourseController::class, 'index'])->name('index');
+// Route::prefix('courses')->name('courses.')->group(function() {
+//     // Show all database records
+//     Route::get('/', [CourseController::class, 'index'])->name('index');
 
-    // to create new rocord
-    Route::get('create', [CourseController::class, 'create'])->name('create');
-    Route::post('create', [CourseController::class, 'store'])->name('store');
+//     // to create new rocord
+//     Route::get('create', [CourseController::class, 'create'])->name('create');
+//     Route::post('create', [CourseController::class, 'store'])->name('store');
 
-    // to create new rocord
-    Route::get('/{id}/edit', [CourseController::class, 'edit'])->name('edit');
-    Route::put('/{id}/edit', [CourseController::class, 'update'])->name('update');
+//     // to create new rocord
+//     Route::get('/{id}/edit', [CourseController::class, 'edit'])->name('edit');
+//     Route::put('/{id}/edit', [CourseController::class, 'update'])->name('update');
 
-    Route::delete('/{id}/delete', [CourseController::class, 'destroy'])->name('destroy');
-});
+//     Route::delete('/{id}/delete', [CourseController::class, 'destroy'])->name('destroy');
+// });
 
 Route::resource('courses', CourseController::class);
