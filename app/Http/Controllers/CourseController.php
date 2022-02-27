@@ -89,7 +89,10 @@ class CourseController extends Controller
      */
     public function edit($id)
     {
-        //
+        // $course = Course::find($id);
+        $course = Course::findOrFail($id);
+
+        return view('courses.edit', compact('course'));
     }
 
     /**
@@ -101,7 +104,37 @@ class CourseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|min:3|max:20',
+            'price' => 'required|numeric',
+            'image' => 'nullable|image|mimes:png,jpg,jpeg,gif,svg',
+            'description' => [new MaxWordsRule(500)]
+        ]);
+
+        $course = Course::find($id);
+        $imgname = $course->image;
+
+        if( $request->hasFile('image') ) {
+            // upload file
+            $imgname = 'course_'.time().rand().$request->file('image')->getClientOriginalName();
+            $request->file('image')->move(public_path('uploads'), $imgname);
+        }
+
+        $action = $course->update([
+            'name' => $request->name,
+            'price' => $request->price,
+            'image' => $imgname,
+            'description' => $request->description,
+        ]);
+
+        if ($action) {
+
+            return redirect()->route('courses.index')->with('msg', 'Course updated successfully')->with('type', 'warning');
+        }else {
+
+            return redirect()->route('courses.index')->with('msg', 'Course updated successfully')->with('type', 'warning');
+        }
+
     }
 
     /**

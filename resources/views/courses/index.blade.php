@@ -94,7 +94,7 @@
                 <td><img width="80" src="{{ asset('uploads/'.$course->image) }}" alt=""></td>
                 <td>{{ $course->created_at }}</td>
                 <td>
-                    <a class="btn btn-primary btn-sm" href="#"> <i class="fas fa-edit"></i> </a>
+                    <a class="btn btn-primary btn-sm" href="{{ route('courses.edit', $course->id) }}"> <i class="fas fa-edit"></i> </a>
                     {{-- <a class="btn btn-danger btn-sm" href="{{ route('courses.destroy', $course->id) }}"> <i class="fas fa-trash"></i> </a> --}}
 
                     <form class="d-inline" action="{{ route('courses.destroy', $course->id) }}" method="POST">

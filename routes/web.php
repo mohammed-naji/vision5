@@ -6,6 +6,7 @@ use App\Models\Course;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\RelationController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\Site1Controller;
@@ -202,3 +203,16 @@ Route::get('new-course', function() {
 // });
 
 Route::resource('courses', CourseController::class);
+
+Route::get('hash', function() {
+    return bcrypt(123);
+});
+
+
+
+
+
+// Route::get('one-to-one' , [RelationController])
+Route::controller(RelationController::class)->group(function() {
+    Route::get('one-to-one', 'one_to_one')->name('one_to_one');
+});
