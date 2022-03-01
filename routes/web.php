@@ -215,4 +215,13 @@ Route::get('hash', function() {
 // Route::get('one-to-one' , [RelationController])
 Route::controller(RelationController::class)->group(function() {
     Route::get('one-to-one', 'one_to_one')->name('one_to_one');
+
+    Route::get('one-to-many', 'one_to_many')->name('one_to_many');
+    Route::post('one-to-many', 'one_to_many_submit')->name('one_to_many_submit');
+
+    Route::get('many-to-many', 'many_to_many')->name('many_to_many');
+    Route::post('many-to-many', 'many_to_many_submit')->name('many_to_many_submit');
+
+    Route::get('register_subjects', 'register_subjects')->name('register_subjects');
+    Route::post('register_subjects_submit', 'register_subjects_submit')->name('register_subjects_submit');
 });
